@@ -9,14 +9,14 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
-import com.dtech.boot.web.controller.TopicsController;
-import com.dtech.boot.web.model.Topic;
+import com.dtech.boot.web.controller.TopicController;
+import com.dtech.boot.web.resource.Topic;
 
 @Configuration
-public class BootRunner implements ApplicationRunner {
+public class BootDataLoader implements ApplicationRunner {
 
 	@Autowired
-	TopicsController topicsController;
+	TopicController topicController;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -29,7 +29,7 @@ public class BootRunner implements ApplicationRunner {
 			topicsList.add(new Topic("id-"+i, "name-"+i, "desc-"+i));
 		});
 		
-		topicsController.setTopicsList(topicsList);
+		topicController.setTopicsList(topicsList);
 
 		System.out.println("~~~~~~~~~data initialization complete~~~~~~~~");
 	}
