@@ -27,7 +27,7 @@ public class TopicService {
 		return topics;
 	}
 	
-	public Topic get(String id) {
+	public Topic get(Long id) {
 		return topicRepository.findById(id).orElse(null);
 	}
 
@@ -42,7 +42,7 @@ public class TopicService {
 		return topicRepository.save(topic);
 	}
 
-	public void delete(String id) {
+	public void delete(Long id) {
 		topicRepository.delete(get(id));
 	}
 }

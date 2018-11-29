@@ -9,6 +9,6 @@ import com.dtech.boot.web.resource.Topic;
 
 @Repository
 @Transactional
-public interface TopicRepository extends JpaRepository<Topic, String> {
+public interface TopicRepository extends JpaRepository<Topic, Long> {
 
 }
