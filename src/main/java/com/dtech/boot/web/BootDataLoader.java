@@ -9,14 +9,14 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
-import com.dtech.boot.web.controller.TopicController;
 import com.dtech.boot.web.resource.Topic;
+import com.dtech.boot.web.service.TopicService;
 
 @Configuration
 public class BootDataLoader implements ApplicationRunner {
 
 	@Autowired
-	TopicController topicController;
+	TopicService topicService;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -26,10 +26,10 @@ public class BootDataLoader implements ApplicationRunner {
 
 		IntStream.range(1, 10)
 		.forEach(i -> {
-			topicsList.add(new Topic("id-"+i, "name-"+i, "desc-"+i));
+			topicsList.add(new Topic(Long.valueOf(i), "name-"+i, "desc-"+i));
 		});
 		
-		topicController.setTopicsList(topicsList);
+		topicService.setTopicsList(topicsList);
 
 		System.out.println("~~~~~~~~~data initialization complete~~~~~~~~");
 	}

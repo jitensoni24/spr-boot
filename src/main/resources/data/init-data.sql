@@ -1,0 +1,1 @@
+INSERT INTO TOPIC(name, description) VALUES('aaa','aaa-desc');
