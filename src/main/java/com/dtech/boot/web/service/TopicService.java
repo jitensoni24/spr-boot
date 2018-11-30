@@ -26,6 +26,12 @@ public class TopicService {
 		topicRepository.findAll().forEach(topics::add);
 		return topics;
 	}
+	/*
+	public List<Topic> all(Integer limit) {
+		List<Topic> topics = new ArrayList<>();
+		topicRepository.findAllTopic(PageRequest.of(0, limit)).forEach(topics::add);
+		return topics;
+	}*/
 	
 	public Topic get(Long id) {
 		return topicRepository.findById(id).orElse(null);

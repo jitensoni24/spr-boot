@@ -20,10 +20,21 @@ public class TopicController {
 	@Autowired
 	TopicService topicService;
 	
+
+	@GetMapping("/")
+	public List<Topic> topicHome() {
+		return topicService.all().subList(0, 10);
+	}
+	
 	@GetMapping("/topics")
 	public List<Topic> all() {
 		return topicService.all();
 	}
+
+	/*@GetMapping("/topics/limit/{limit}")
+	public List<Topic> all(@PathVariable Integer limit) {
+		return topicService.all(limit);
+	}*/
 	
 	@GetMapping("/topics/{id}")
 	public Topic get(@PathVariable Long id) {

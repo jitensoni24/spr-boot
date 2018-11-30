@@ -1,0 +1,54 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+
+metadata:
+  #deployment name
+  name: spr-boot-demo-2
+  #deployment namespace
+  namespace: skyq-jit
+  
+  labels:
+    #will be used to uniquely identiy the deployment on the pod 
+    app: boot-app-2
+    name: boot-app
+    environment: test
+    territory: uk
+spec:
+    replicas: 1
+    
+    # The selector field tell the deployment which pod to update with the new version. 
+    # This field is optional, but if you have labels
+    # uniquely defined for the pod, in this case the "name, environment, territory" label,
+    # then we need to redefine the matchLabels and eliminate the version field from there.
+    selector:
+      matchLabels: 
+        name: boot-app
+        environment: test
+        territory: uk
+        
+    strategy: 
+      type: Recreate
+    
+    # POD template definition starts here
+    template: 
+      metadata: 
+        # uniquely identify the POD
+        labels: 
+          name: boot-app
+          environment: test
+          territory: uk 
+          
+      # POD container definiton start here    
+      spec:
+        containers: 
+          - name: boot-app-2
+            image: sonijit/boot-app:latest
+            imagePullPolicy: Always
+            ports:
+              - protocol: TCP
+                containerPort: 8080
+            resources: 
+              limits:
+                cpu: "6"
+              requests:
+                cpu: "0.5"
