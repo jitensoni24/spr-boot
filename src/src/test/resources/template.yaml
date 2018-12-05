@@ -1,0 +1,11 @@
+# Values for the {TERRITORY} {ENV} instance
+
+application:
+  environment: {ENV}
+  territory: {TERRITORY}
+  namespace: skyq-{TERRITORY}-{ENV}
+  
+volumes:
+  splunk:
+    volumeName: splunkforwarder-skyq-{TERRITORY}-{ENV}
+    claimName: splunkforwarder-skyq-{TERRITORY}-{ENV}-pvc
