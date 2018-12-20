@@ -11,21 +11,22 @@ import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 
-public class CreateResources {
+
+/**
+	create application property resources<br>
+	territory = gb, it, de<br>
+	env = auto-test, manual-test, dev-edge, dev-stable, integration, ethan-lab, ref-lab
+*/
+public class CreateApplicationPropertyResources {
 
 	public static void main(String[] args) throws IOException {
 		
-		//create helm deployments
-    	//territory = gb, it, de
-    	//env = auto-test, manual-test, dev-edge, dev-stable, integration, ethan-lab, ref-lab
-		
-		ClassPathResource classPathResource = new ClassPathResource("template.yaml");
+		ClassPathResource classPathResource = new ClassPathResource("template.properties");
 		String file = IOUtils.toString(classPathResource.getInputStream(), Charset.forName("UTF-8"));
 		
 		Stream.of("gb","it", "de")
 		.forEach(territory -> {
             try {
-                Path path = Files.createDirectories(Paths.get(System.getProperty("user.home") + "/Desktop/resource-dirs/"));
                 
                 Stream.of("auto-test", "manual-test", "dev", "integration", "ethan-lab", "ref-lab")
                 	.forEach(env -> {
@@ -34,21 +35,29 @@ public class CreateResources {
                 			if(territory.equals("gb") && (env.equals("ethan-lab") || env.equals("ethan-lab"))) {
                 				return; //only skip this iteration
                 			}
+                			Path path = Files.createDirectories(Paths.get(System.getProperty("user.home") + "/Desktop/resource-dirs/" + env + "-" + territory));
                 			
-							Path filePath = Files.createFile(Paths.get(path + "/" + territory + "-" + env + ".yaml"));
 							
 							String content = file.replace("{ENV}", env).replace("{TERRITORY}", territory);
 							
-							Files.write(filePath, content.getBytes(), StandardOpenOption.CREATE);
+							Path toCreate = Paths.get(path + "/" + "application.properties");
+							
+							
+							if(Files.exists(toCreate)) {
 
-							System.out.println(filePath);
+								Files.delete(toCreate);
+							}
+							
+							Files.write(toCreate, content.getBytes(), StandardOpenOption.CREATE);
+							
+							System.out.println(toCreate);
 							
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
                 });
                 
-            } catch (IOException e) {}
+            } finally {}
         });
 	}
 	

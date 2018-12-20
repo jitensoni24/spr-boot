@@ -53,10 +53,11 @@ public class CreateProfileDirs {
            .forEach(env -> {
                Stream.of("gb", "it", "de")
                    .forEach(territory -> {
+                	   System.out.println("\"" + env + "-" + territory +"\"," );
                        try {
                            Path path = Files.createDirectories(Paths.get(System.getProperty("user.home") + "/Desktop/profile-dirs/" + env + "-" + territory));
                            
-                           System.out.println(path);
+                           
 
                            Files.createFile(Paths.get(path + "/" + "persistence.properties"));
                            Files.createFile(Paths.get(path + "/" + "application.properties"));
